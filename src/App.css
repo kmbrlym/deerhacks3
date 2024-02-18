@@ -1,42 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
+  width:100%;
   padding: 2rem;
   text-align: center;
+  color:black;
+  font-family: "Inter", sans-serif;
+  background-color: #FFFEF4;
+}
+.cs-chat-container{
+  margin: 0 auto;
+  display:flex;
+ flex-direction: column;
+ gap:20px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.interview{
+  border:1px solid #00296B; 
+  padding:15px 8px;
+  border-radius:10px;
+  margin-bottom:20px;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.cs-main-container{
+  display: flex;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.input-box{
+  background-color: white;
+  border:1px solid green;
+  color:black;
+  display:flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
 
-.card {
-  padding: 2em;
+.cs-message-input__content-editor{
+  background-color: white;
+  border:1px solid blue;
+  width:200px;
+  color:black;
+  display:flex;
 }
+.cs-message.container.cs-message__html-content{
+  display: flex;
+  flex-direction: column;
+  gap:20px;
 
-.read-the-docs {
-  color: #888;
+}
+/* styles.css */
+input::after {
+  border-color: blue;
+  background-color: white;
+  color:black;
+}
+h2{
+  color:#00296B;
+}
+body{
+  background-color: #FFFEF4;
+  display:ineline-block!important;
+}
+.formSubmit{
+  display: flex;
+  flex-direction: column;
+  gap:10px;
+  padding-bottom:20px;
+}
+.form{
+  margin-bottom:20px;
+}
+label{
+  color:black;
+  font-family: "Inter";
+  font-size:22px;
+}
+input{
+  width:200px;
+  padding:10px;
+  margin:0 auto;
+  background-color: white;
+  border:1px solid black;
+  border-radius:10px;
+}
+p{
+  margin-top:0px;
+}
+hr{
+  margin-top: 33px;
+}
+button[type='submit']{
+  background: #00296B;
+  color:white; 
 }
