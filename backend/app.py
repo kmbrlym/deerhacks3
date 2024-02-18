@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify
 
 openai.api_key = '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'
 app = Flask(__name__)
+prompt_q = ""
 
 
 def extract_audio(video_path, output_audio_path):
@@ -19,7 +20,7 @@ def speech_to_text(audio_path):
         audio = recognizer.record(source)
 
     try:
-        text = recognizer.recognize_google(audio, language ="en-IN", show_all =False)
+        text = recognizer.recognize_google(audio, language="en-IN", show_all=False)
         return text
     except sr.UnknownValueError:
         print("Sorry, could not understand audio.")
@@ -36,50 +37,71 @@ def handle_extract_audio():
     video_file = request.files['file']
     if video_file.filename == '':
         return jsonify({"error": "No selected file"})
-
+    elif video_file.filename == "file1.mov":  #TODO hard code file names
+        prompt_q = "This is the question they are answering: "  #TODO fill question prompt in. add a whitespace at the end
+    elif video_file.filename == "file2.mov":  #TODO hard code file names
+        prompt_q = "This is the question they are answering: "  #TODO fill question prompt in. add a whitespace at the end
+    
     video_path = 'temp_video.mp4'
     audio_output_path = 'extracted_audio.wav'
 
     # Save the uploaded video temporarily
     video_file.save(video_path)
-    print(video_path)
     # Extract audio from the video
     extract_audio(video_path, audio_output_path)
 
-    text_to_analyze = speech_to_text(audio_output_path)
-        
-    print(text_to_analyze)
-    return informal(text_to_analyze)
+    transcript = speech_to_text(audio_output_path)
+    out = feedback(transcript) + '\nYour overall scores are: ' + rate(transcript)
+    return out
 
 
-def informal(text_to_analyze):
+def feedback(text_to_analyze):
     """
-    If the text is informal, function returns a sentence of why it is informal.
-    If it is formal, it returns an empty string.
-    :param text_to_analyze: text to be analyzed
-    :return: str
+    give feedback on input transcript
     """
     # Use OpenAI's Completion API to analyze the text
     # Use OpenAI's Completion API to analyze the text
     response = openai.Completion.create(
         engine="gpt-3.5-turbo-instruct",
-        prompt="Is the provided interview response inappropriate? If yes, " +
-            "respond 'Yes' and explain why it's inappropriate in one " +
-            "sentence and give one other sentence of how this person should response;"
-            " if not, simply say 'No'. " + text_to_analyze,  # This line is causing the error
+        prompt="You are helping someone practice their interviewing skills. " + prompt_q + "Offer some " +
+        "feedback on the following transcript outlining any areas for improvement. Also reinforce " +
+        "any positive aspects of the transcript. Answer with the following categories: positve, " +
+        "negative. Answer as if you were responding to the candidate in the first person." + 
+        "\n" + text_to_analyze,
+        max_tokens=500,
+        temperature=0.5,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0
+    )
+
+    # Extract the generated text from the response
+    genText = response.choices[0].text.strip()
+    return genText
+
+
+def rate(text_to_analyze) -> str:
+    """
+    rate the text out of 10
+    """
+    # Use OpenAI's Completion API to analyze the text
+    response = openai.Completion.create(
+        engine="gpt-3.5-turbo-instruct",
+        prompt="Pretend you are helping someone practice for an interview. " + prompt_q + "Rate the " +
+        "following transcript out of 10 in each category: confidence, passion, professionalism." +
+        " Judge using aspects an interviewer would consider such as language proficiency, " +
+        "communication skills, or confidence. Return your ratings in this format: category: rating" 
+        + "Comma separate each category and don't use newline breaks.\n" + text_to_analyze,
         max_tokens=100,
         temperature=0.5,
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0
     )
-    print(text_to_analyze)
-    print(response)
 
     # Extract the generated text from the response
-    generated_text = response.choices[0].text.strip()
-    print(generated_text)
-    return generated_text
+    genText = response.choices[0].text.strip()
+    return genText
 
 
 if __name__ == '__main__':
