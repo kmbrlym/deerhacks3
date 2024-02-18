@@ -19,7 +19,7 @@ def speech_to_text(audio_path):
         audio = recognizer.record(source)
 
     try:
-        text = recognizer.recognize_google(audio, language ="en-IN", show_all =True)
+        text = recognizer.recognize_google(audio, language ="en-IN", show_all =False)
         return text
     except sr.UnknownValueError:
         print("Sorry, could not understand audio.")
@@ -42,11 +42,13 @@ def handle_extract_audio():
 
     # Save the uploaded video temporarily
     video_file.save(video_path)
-
+    print(video_path)
     # Extract audio from the video
     extract_audio(video_path, audio_output_path)
 
     text_to_analyze = speech_to_text(audio_output_path)
+        
+    print(text_to_analyze)
     return informal(text_to_analyze)
 
 
@@ -58,20 +60,25 @@ def informal(text_to_analyze):
     :return: str
     """
     # Use OpenAI's Completion API to analyze the text
+    # Use OpenAI's Completion API to analyze the text
     response = openai.Completion.create(
         engine="gpt-3.5-turbo-instruct",
-        prompt = "Is the provided interview response inappropriate? If yes, " +
-                  "respond 'Yes' and explain why it's inappropriate in one " +
-                  "sentence; if not, simply say 'No'. " + text_to_analyze,
+        prompt="Is the provided interview response inappropriate? If yes, " +
+            "respond 'Yes' and explain why it's inappropriate in one " +
+            "sentence and give one other sentence of how this person should response;"
+            " if not, simply say 'No'. " + text_to_analyze,  # This line is causing the error
         max_tokens=100,
         temperature=0.5,
         top_p=1,
         frequency_penalty=0,
         presence_penalty=0
     )
+    print(text_to_analyze)
+    print(response)
 
     # Extract the generated text from the response
     generated_text = response.choices[0].text.strip()
+    print(generated_text)
     return generated_text
 
 
