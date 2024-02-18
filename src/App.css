@@ -14,14 +14,19 @@
  gap:20px;
 }
 
-.interview{
+.container-interview{
   border:1px solid #00296B; 
   padding:15px 8px;
   border-radius:10px;
   margin-bottom:20px;
+  width:635px;
 }
 .cs-main-container{
   display: flex;
+  align-items: center;
+}
+.form-submit{
+  padding-top:15px;
 }
 .input-box{
   background-color: white;
@@ -51,6 +56,10 @@ input::after {
   border-color: blue;
   background-color: white;
   color:black;
+}
+.cs-main-container{
+  display: flex;
+  flex-direction: column;
 }
 h2{
   color:#00296B;

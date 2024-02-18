@@ -1,0 +1,121 @@
+html {
+  height: 100%;
+  width: 100%;
+  background-color: #FFFEF4;
+
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 60% 40%; 
+  grid-gap: 20px;
+}
+
+.content-left{
+  display: flex;
+  flex-direction: column;
+}
+
+.content-right {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  height: 100%; 
+}
+
+.header {
+  grid-column: span 12;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: degular, sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 32px;
+  color: #00296B;
+  margin-top: 20px;
+  margin-bottom: 90px;
+  margin-left: 70%;
+}
+.header-1 {
+  font-family: "Inter", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 64px;
+  color: #666662;
+  padding-left: 100px;
+  margin-bottom: 15px;
+}
+
+.style-1 {
+  font-family: "kepler-3-variable", sans-serif;
+  font-variation-settings: "opsz" 8, "wdth" 90, "wght" 600;
+  font-size: 70px;
+  color: rgba(0, 41, 107, 1);
+}
+
+.header-2 {
+  font-family: "kepler-3-variable", sans-serif;
+  font-variation-settings: "wght" 280, "wdth" 80, "opsz" 5;
+  opacity: 60%;
+  font-size: 32px;
+  padding-left: 100px;
+}
+
+.style-2 {
+  font-family: "kepler-3-variable", sans-serif;
+  font-variation-settings: "wght" 280, "wdth" 80, "opsz" 5;
+  font-size: 48px;
+  color: #00296B;
+}
+
+.style-3 {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  color: #666662;
+  padding-left: 30px;
+}
+
+.stat-1 {
+  height: 118px;
+  width: 526px;
+  border: 1px solid #666662;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 20px;
+  margin-left: 100px;
+  margin-top: 25px;
+  
+}
+
+.stats{
+
+}
+.start-btn {
+  height: 70px;
+  width: 379px;
+  border-radius: 15px;
+  background-color: #00296B;
+  color: white;
+  font-family: "Inter", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  font-size: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 100px;
+  margin-top: 35px;
+  letter-spacing: 3px;
+}
+
+img {
+  width: 55%; 
+  height: auto; 
+  margin-top: 25%;
+  margin-right: 180px;
+}

@@ -1,12 +1,14 @@
+from flask_cors import CORS
 import moviepy.editor as mp
 import speech_recognition as sr
 import openai
+
 from flask import Flask, request, jsonify
 
 openai.api_key = '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'
 app = Flask(__name__)
-prompt_q = ""
 
+CORS(app)
 
 def extract_audio(video_path, output_audio_path):
     video = mp.VideoFileClip(video_path)
@@ -32,15 +34,17 @@ def speech_to_text(audio_path):
 
 @app.route('/extract_audio', methods=['POST'])
 def handle_extract_audio():
+    global prompt_q
+    prompt_q = ""
     if 'file' not in request.files:
         return jsonify({"error": "No file part"})
     video_file = request.files['file']
     if video_file.filename == '':
         return jsonify({"error": "No selected file"})
     elif video_file.filename == "file1.mov":  #TODO hard code file names
-        prompt_q = "This is the question they are answering: "  #TODO fill question prompt in. add a whitespace at the end
+        prompt_q = "This is the question they are answering: What is your strongest coding language? If they completly have a answer not related to the question or go off topic, give them feed back accordingly."  #TODO fill question prompt in. add a whitespace at the end
     elif video_file.filename == "file2.mov":  #TODO hard code file names
-        prompt_q = "This is the question they are answering: "  #TODO fill question prompt in. add a whitespace at the end
+        prompt_q = "This is the question they are answering: How have you worked in a group setting in the past? If they completly have a answer not related to the question or go off topic, give them feed back accordingly."  #TODO fill question prompt in. add a whitespace at the end
     
     video_path = 'temp_video.mp4'
     audio_output_path = 'extracted_audio.wav'
@@ -74,9 +78,9 @@ def feedback(text_to_analyze):
         frequency_penalty=0,
         presence_penalty=0
     )
-
     # Extract the generated text from the response
     genText = response.choices[0].text.strip()
+    print(genText)
     return genText
 
 
@@ -101,6 +105,7 @@ def rate(text_to_analyze) -> str:
 
     # Extract the generated text from the response
     genText = response.choices[0].text.strip()
+    print(genText)
     return genText
 
 

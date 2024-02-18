@@ -10,8 +10,14 @@
   },
   "dependencies": {
     "@chatscope/chat-ui-kit-react": "^1.10.1",
+    "@yelysei/react-files-drag-and-drop": "^1.0.0",
+    "axios": "^1.6.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-drag-drop-files": "^2.3.10",
+    "react-dropzone": "^14.2.3",
+    "react-router": "^6.22.1",
+    "react-router-dom": "^6.22.1",
     "react-simple-chatbot": "^0.6.1"
   },
   "devDependencies": {
