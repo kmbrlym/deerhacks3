@@ -53,7 +53,7 @@ const initialQuestions = [
   "How have you worked in a group setting in the past?"
 ];
 
-const API_KEY = "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";
+const API_KEY = "YOUR_API_KEY";
 
 function Home() {
   const [industry, setIndustry] = useState("");
