@@ -4,7 +4,7 @@ import speech_recognition as sr
 import openai
 
 from flask import Flask, request, jsonify
-
+openai.api_key = "Insert your API key here"
 app = Flask(__name__)
 
 CORS(app)
